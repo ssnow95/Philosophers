@@ -6,7 +6,7 @@
 /*   By: ssnowbir <ssnowbir@student.21.ru>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 16:01:33 by ssnowbir          #+#    #+#             */
-/*   Updated: 2021/01/03 20:32:05 by ssnowbir         ###   ########.fr       */
+/*   Updated: 2021/01/11 17:51:23 by ssnowbir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ long long int get_time(t_all *all)
   return (-1);
  finish = (unsigned int)((tv.tv_sec) * 1000 + (tv.tv_usec) / 1000);
 //  printf("%lld                %lld\n\n", finish, all[0].start);
- return (finish - all[0].start);
+ return (finish - all->start);
 }
 
 

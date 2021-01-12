@@ -1,6 +1,6 @@
 NAME = philosophers
 
-SRCS = main.c help_function.c inits.c death.c
+SRCS = main.c help_function.c inits.c death.c main2.c help_function2.c
 
 OBJS = $(SRCS:.c=.o)
 HEADER = philosophers.h
