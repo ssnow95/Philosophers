@@ -6,13 +6,13 @@
 /*   By: ssnowbir <ssnowbir@student.21.ru>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 14:58:09 by ssnowbir          #+#    #+#             */
-/*   Updated: 2021/01/12 20:50:52 by ssnowbir         ###   ########.fr       */
+/*   Updated: 2021/01/13 20:56:33 by ssnowbir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int					parsing(char **argv, t_info *info, int argc)
+int						parsing(char **argv, t_info *info, int argc)
 {
 	if (argv != NULL)
 	{
@@ -24,12 +24,12 @@ int					parsing(char **argv, t_info *info, int argc)
 			info->must_eat = ft_atoi(argv[5]);
 		else
 			info->must_eat = -1;
-		if (info->sum_phil > 200 && info->sum_phil < 2)
+		if (info->sum_phil > 200 || info->sum_phil < 2)
 		{
 			write(2, "incorrect sum philosophers\n", 27);
 			return (1);
 		}
-		if (argc == 6 && info->must_eat <= 0)
+		else if (argc == 6 && info->must_eat <= 0)
 		{
 			write(2, "incorrect sum args[5]\n", 22);
 			return (1);
@@ -63,9 +63,8 @@ void					*live(void *args)
 	return (NULL);
 }
 
-void					make_fork(int i, int j, t_all *all)
+void					make_fork(int i, int j, t_all *all, int stat)
 {
-	int					stat;
 	int					g_status;
 
 	while (i < all->info->sum_phil)
@@ -76,8 +75,7 @@ void					make_fork(int i, int j, t_all *all)
 		else if (all[i].philo->pid < 0)
 		{
 			write(2, "error: fatal\n", 13);
-			free_struct(all);
-			exit(-1);
+			exit(free_struct(all));
 		}
 		i++;
 		usleep(50);
@@ -94,7 +92,7 @@ void					make_fork(int i, int j, t_all *all)
 	exit(0);
 }
 
-int					main(int argc, char **argv)
+int						main(int argc, char **argv)
 {
 	t_all			*all;
 	t_table			*table;
@@ -102,13 +100,13 @@ int					main(int argc, char **argv)
 	t_info			info;
 
 	if ((argc == 6 || argc == 5) && parsing(argv, &info, argc) == 0)
-	{
+	{ 
 		philo = init_philo(info.sum_phil, info.must_eat);
 		table = init_table(info.sum_phil);
 		all = init_all(table, philo, &info);
-		make_fork(0, 0, all);
+		make_fork(0, 0, all, 0);
 	}
-	else
+	if (argc > 6 || argc < 5)
 	{
 		write(2, "incorrect sum argc\n", 19);
 		return (1);

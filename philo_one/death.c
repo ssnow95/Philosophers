@@ -6,69 +6,72 @@
 /*   By: ssnowbir <ssnowbir@student.21.ru>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 18:03:59 by ssnowbir          #+#    #+#             */
-/*   Updated: 2021/01/07 20:11:09 by ssnowbir         ###   ########.fr       */
+/*   Updated: 2021/01/13 20:57:46 by ssnowbir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int ft_strlen(char *str)
+int					ft_strlen(char *str)
 {
-    int i;
+	int				i;
 
-    i = 0;
-    while (str[i] != '\0')
-        i++;
-    return (i);
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
 }
 
-int check_phil_full(t_all *all)
+int					check_phil_full(t_all *all)
 {
 	int i;
 
 	i = 0;
-	while(i < all->info->sum_phil)
+	while (i < all->info->sum_phil)
 	{
-		if(all[i].full_feed == 0)
+		if (all[i].full_feed == 0)
 			return (0);
 		i++;
 	}
 	return (1);
 }
 
-void *phil_die(void *args)
+void				print_die(t_all *all, int start, int i)
 {
-    unsigned int i;
-    unsigned int j;
-    long long int start;
-    
-	t_all *all = (t_all *)args;
-    while (1)
-    {
-        i = 0;
-        while (i < all->info->sum_phil)
-        {
-            start = get_time(all);
-            if ((start - all[i].philo->start) > all->info->death)
-            {
-				if (all[i].full_feed == 0)
+	pthread_mutex_lock(&all->table->forks[all->info->sum_phil]);
+	ft_putnbr_fd(start, 1);
+	write(1, "ms ", 3);
+	all->death = 1;
+	ft_putnbr_fd(all[i].philo->name, 1);
+	write(1, " died\n", 6);
+	pthread_mutex_unlock(&all->table->forks[all->info->sum_phil]);
+}
+
+void				*phil_die(void *args)
+{
+	int	i;
+	long long int	start;
+	t_all			*all;
+
+	all = (t_all *)args;
+	while (1)
+	{
+		i = -1;
+		while (++i < all->info->sum_phil)
+		{
+			if ((start = get_time(all) - all->philo->start) >
+							all->info->death || all->full_feed == 1)
+			{
+				if (all->full_feed == 0)
 				{
-                    pthread_mutex_lock(&all->table->forks[all->info->sum_phil]);
-                    ft_putnbr_fd(start, 1);
-                    write(1, "ms ", 3);
-                    all->death = 1;
-                    write(1, all[i].philo->name2, 1);
-                    write(1, " died\n", 6);
-                    pthread_mutex_unlock(&all->table->forks[all->info->sum_phil]);
-                    exit(1);
-				}
-				else if (all[i].full_feed == 1 && check_phil_full(all) == 1)
-				{
+					print_die(all, start, i);
 					return (NULL);
 				}
-            }
-            i++;
-        }
-    }
-    return (NULL);
+				else if (all->full_feed == 1 && check_phil_full(all) == 1)
+					return (NULL);
+			}
+			usleep(20);
+		}
+	}
+	return (NULL);
 }

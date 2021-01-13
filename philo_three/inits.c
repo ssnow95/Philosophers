@@ -6,13 +6,13 @@
 /*   By: ssnowbir <ssnowbir@student.21.ru>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 16:27:26 by ssnowbir          #+#    #+#             */
-/*   Updated: 2021/01/12 20:34:42 by ssnowbir         ###   ########.fr       */
+/*   Updated: 2021/01/13 20:56:52 by ssnowbir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-t_info				*init_info(int sum_phil)
+t_info				*init_info()
 {
 	t_info			*info;
 
@@ -38,7 +38,6 @@ t_philo				*init_philo(int sum, int must_eat)
 	{
 		philo[i].must_eat = must_eat;
 		philo[i].name = i + 1;
-		philo[i].name2 = ft_itoa(philo[i].name);
 		philo[i].right_fork = i;
 		if (i == (sum - 1))
 			philo[i].left_fork = 0;
@@ -51,26 +50,20 @@ t_philo				*init_philo(int sum, int must_eat)
 
 t_table				*init_table(int sum)
 {
-	sem_t			*forks;
-	sem_t			*sem_print;
 	t_table			*table;
 	int				i;
 
 	i = 0;
-	if (!(forks = (sem_t*)malloc(sizeof(sem_t) * sum)))
-		return (NULL);
-	if (!(sem_print = (sem_t*)malloc(sizeof(sem_t) * 1)))
-		return (NULL);
 	if (!(table = (t_table*)malloc(sizeof(t_table))))
 		return (NULL);
 	sem_unlink("forks");
-	if ((forks = sem_open("forks", O_CREAT, 0666, sum)) == SEM_FAILED)
+	if ((table->forks =
+				sem_open("forks", O_CREAT, 0666, sum)) == SEM_FAILED)
 		exit(1);
 	sem_unlink("sem_print");
-	if ((sem_print = sem_open("sem_print", O_CREAT, 0666, 1)) == SEM_FAILED)
+	if ((table->sem_print =
+				sem_open("sem_print", O_CREAT, 0666, 1)) == SEM_FAILED)
 		exit(1);
-	table->forks = forks;
-	table->sem_print = sem_print;
 	return (table);
 }
 

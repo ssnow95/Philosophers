@@ -6,7 +6,7 @@
 /*   By: ssnowbir <ssnowbir@student.21.ru>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 20:04:46 by ssnowbir          #+#    #+#             */
-/*   Updated: 2021/01/12 20:20:41 by ssnowbir         ###   ########.fr       */
+/*   Updated: 2021/01/13 20:50:18 by ssnowbir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ typedef struct			s_info
 typedef struct			s_philo
 {
 	int					name;
-	char				*name2;
 	int					left_fork;
 	int					right_fork;
 	pid_t				pid;
@@ -66,23 +65,21 @@ typedef struct			s_all
 
 int						parsing(char **argv, t_info *info, int argc);
 int						main(int argc, char **argv);
-t_info					*init_info(int sum_phil);
+t_info					*init_info();
 int						ft_atoi(const char *str);
 t_philo					*init_philo(int sum, int must_eat);
 t_all					*init_all(t_table *table, t_philo *philo, t_info *info);
 t_table					*init_table(int sum);
 void					*live(void *args);
-char					*ft_itoa(int n);
-void					ft_putnbr(long long int n);
 long long int			get_time(t_all *all);
 void					ft_putstr_fd(char *s, int fd);
 void					ft_putchar_fd(char c, int fd);
 void					ft_putnbr_fd(int n, int fd);
 void					*phil_die(void *args);
 int						first_and_second_fork(int start, t_all *all);
-int						eating(int start, t_all *all);
+int						eating(t_all *all);
 int						eat(t_all *all);
 int						sleep_philo(t_all *all);
 int						think(t_all *all);
-void					free_struct(t_all *all);
+int						free_struct(t_all *all);
 #endif

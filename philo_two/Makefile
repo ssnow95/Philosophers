@@ -1,6 +1,6 @@
 NAME = philosophers
 
-SRCS = main.c help_function.c inits.c death.c
+SRCS = main.c help_function.c inits.c death.c main2.c
 
 OBJS = $(SRCS:.c=.o)
 HEADER = philosophers.h
@@ -11,10 +11,10 @@ $(NAME): $(OBJS) $(HEADER)
 	gcc $(OBJS) -Wall -Wextra -g -Werror 
 
 $(OBJS): %.o:%.c $(HEADER)
-	gcc $(FLAGS) -c $< -o $@
+	gcc -c  -Wall -Wextra -g -Werror $< -o $@
 
 clean:
-	/bin/rm -f srcs/*.o
+	/bin/rm -f *.o
 
 fclean: clean
 	/bin/rm -f $(NAME)
