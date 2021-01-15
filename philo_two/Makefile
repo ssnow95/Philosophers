@@ -8,7 +8,7 @@ HEADER = philosophers.h
 all: $(NAME)
 
 $(NAME): $(OBJS) $(HEADER)
-	gcc $(OBJS) -Wall -Wextra -g -Werror 
+	gcc $(OBJS) -Wall -Wextra -g -Werror -o $(NAME) 
 
 $(OBJS): %.o:%.c $(HEADER)
 	gcc -c  -Wall -Wextra -g -Werror $< -o $@

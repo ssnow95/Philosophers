@@ -6,7 +6,7 @@
 /*   By: ssnowbir <ssnowbir@student.21.ru>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/13 17:03:55 by ssnowbir          #+#    #+#             */
-/*   Updated: 2021/01/13 20:46:09 by ssnowbir         ###   ########.fr       */
+/*   Updated: 2021/01/14 16:19:26 by ssnowbir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdio.h>
 # include <string.h>
 # include <sys/time.h>
+# include <limits.h>
 
 typedef struct			s_info
 {
@@ -57,7 +58,7 @@ typedef struct			s_all
 
 int						parsing(char **argv, t_info *info, int argc);
 int						main(int argc, char **argv);
-t_info					*init_info(int sum_phil);
+t_info					*init_info(void);
 int						ft_atoi(const char *str);
 t_philo					*init_philo(int sum, int must_eat);
 t_all					*init_all(t_table *table, t_philo *philo, t_info *info);

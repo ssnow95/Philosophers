@@ -6,7 +6,7 @@
 /*   By: ssnowbir <ssnowbir@student.21.ru>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 14:58:09 by ssnowbir          #+#    #+#             */
-/*   Updated: 2021/01/13 21:00:57 by ssnowbir         ###   ########.fr       */
+/*   Updated: 2021/01/14 15:55:06 by ssnowbir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int					first_fork(int start, t_all *all)
 {
-	pthread_mutex_lock(&all->table->forks[all->philo->right_fork]);
 	if ((start = get_time(all)) - all->philo->start > all->info->death)
 	{
 		pthread_mutex_unlock(&all->table->forks[all->philo->right_fork]);
@@ -23,6 +22,7 @@ int					first_fork(int start, t_all *all)
 	}
 	else
 	{
+		pthread_mutex_lock(&all->table->forks[all->philo->right_fork]);
 		pthread_mutex_lock(&all->table->forks[all->info->sum_phil]);
 		start = get_time(all);
 		ft_putnbr_fd(start, 1);
@@ -36,7 +36,6 @@ int					first_fork(int start, t_all *all)
 
 int					second_fork(int start, t_all *all)
 {
-	pthread_mutex_lock(&all->table->forks[all->philo->left_fork]);
 	if ((start = get_time(all)) - all->philo->start > all->info->death)
 	{
 		pthread_mutex_unlock(&all->table->forks[all->philo->right_fork]);
@@ -46,6 +45,7 @@ int					second_fork(int start, t_all *all)
 	}
 	else
 	{
+		pthread_mutex_lock(&all->table->forks[all->philo->left_fork]);
 		pthread_mutex_lock(&all->table->forks[all->info->sum_phil]);
 		start = get_time(all);
 		ft_putnbr_fd(start, 1);

@@ -6,13 +6,13 @@
 /*   By: ssnowbir <ssnowbir@student.21.ru>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 16:27:26 by ssnowbir          #+#    #+#             */
-/*   Updated: 2021/01/13 20:56:52 by ssnowbir         ###   ########.fr       */
+/*   Updated: 2021/01/14 15:56:38 by ssnowbir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-t_info				*init_info()
+t_info				*init_info(void)
 {
 	t_info			*info;
 

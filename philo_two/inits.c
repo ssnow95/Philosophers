@@ -6,13 +6,13 @@
 /*   By: ssnowbir <ssnowbir@student.21.ru>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 16:27:26 by ssnowbir          #+#    #+#             */
-/*   Updated: 2021/01/13 21:04:19 by ssnowbir         ###   ########.fr       */
+/*   Updated: 2021/01/15 15:49:12 by ssnowbir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-t_info					*init_info()
+t_info					*init_info(void)
 {
 	t_info				*info;
 
@@ -61,11 +61,11 @@ t_table					*init_table(int sum)
 	sem_unlink("forks");
 	if ((forks =
 			sem_open("forks", O_CREAT, 0666, sum)) == SEM_FAILED)
-		exit(1);
+		return (1);
 	sem_unlink("sem_print");
 	if ((sem_print =
 			sem_open("sem_print", O_CREAT, 0666, 1)) == SEM_FAILED)
-		exit(1);
+		return (1);
 	table->forks = forks;
 	table->sem_print = sem_print;
 	return (table);

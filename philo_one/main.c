@@ -6,7 +6,7 @@
 /*   By: ssnowbir <ssnowbir@student.21.ru>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 14:58:09 by ssnowbir          #+#    #+#             */
-/*   Updated: 2021/01/13 20:05:47 by ssnowbir         ###   ########.fr       */
+/*   Updated: 2021/01/15 15:52:18 by ssnowbir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,13 @@ int					parsing(char **argv, t_info *info, int argc)
 			info->must_eat = ft_atoi(argv[5]);
 		else
 			info->must_eat = -1;
-		if (info->sum_phil > 200 || info->sum_phil < 2)
+		if (info->death == -1 || info->eat == -1 || info->sleep == -1
+			|| info->sum_phil == -1 || (argc == 6 && info->must_eat == -1))
 		{
-			write(2, "incorrect sum philosophers\n", 27);
+			write(2, "incorrect args\n", 15);
 			return (1);
 		}
-		if (argc == 6 && info->must_eat <= 0)
+		else if (argc == 6 && (info->must_eat <= 0))
 		{
 			write(2, "incorrect sum args[5]\n", 22);
 			return (1);
@@ -38,7 +39,6 @@ int					parsing(char **argv, t_info *info, int argc)
 	}
 	else
 		return (1);
-	return (0);
 }
 
 int					think(t_all *all)
@@ -77,7 +77,10 @@ void				*live(void *args)
 				if (all->philo->must_eat > 0)
 					all->philo->must_eat--;
 				if (all->philo->must_eat == 0)
+				{
 					all->full_feed = 1;
+					return (NULL);
+				}
 			}
 			else
 				return (NULL);
@@ -120,7 +123,7 @@ int					main(int argc, char **argv)
 	i = 0;
 	if ((argc == 6 || argc == 5) && parsing(argv, &info, argc) == 0)
 		main2(i, &info);
-	if (argc > 6 || argc < 5)
+	else if (argc > 6 || argc < 5)
 	{
 		write(2, "incorrect sum argc\n", 19);
 		return (1);

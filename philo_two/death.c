@@ -6,7 +6,7 @@
 /*   By: ssnowbir <ssnowbir@student.21.ru>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 18:03:59 by ssnowbir          #+#    #+#             */
-/*   Updated: 2021/01/13 21:04:37 by ssnowbir         ###   ########.fr       */
+/*   Updated: 2021/01/14 16:10:08 by ssnowbir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,20 @@ int					check_phil_full(t_all *all)
 	return (1);
 }
 
-void				print_die(t_all *all, int start, int i)
+void				print_die(t_all *all, int start)
 {
 	sem_wait(all->table->sem_print);
 	ft_putnbr_fd(start, 1);
 	write(1, "ms ", 3);
 	all->death = 1;
-	ft_putnbr_fd(all[i].philo->name, 1);
+	ft_putnbr_fd(all->philo->name, 1);
 	write(1, " died\n", 6);
 	sem_post(all->table->sem_print);
 }
 
 void				*phil_die(void *args)
 {
-	int	i;
+	int				i;
 	long long int	start;
 	t_all			*all;
 
@@ -64,7 +64,7 @@ void				*phil_die(void *args)
 			{
 				if (all->full_feed == 0)
 				{
-					print_die(all, start, i);
+					print_die(all, start);
 					return (NULL);
 				}
 				else if (all->full_feed == 1 && check_phil_full(all) == 1)

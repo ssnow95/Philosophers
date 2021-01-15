@@ -6,7 +6,7 @@
 /*   By: ssnowbir <ssnowbir@student.21.ru>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 16:01:33 by ssnowbir          #+#    #+#             */
-/*   Updated: 2021/01/13 16:59:23 by ssnowbir         ###   ########.fr       */
+/*   Updated: 2021/01/14 16:27:27 by ssnowbir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,24 @@
 
 int						ft_atoi(const char *str)
 {
-	int					b;
-	long long int		res;
+	long long int	res;
 
 	res = 0;
-	b = 1;
-	while ((*str >= '\t' && *str <= '\r') || *str == ' ')
-		str++;
 	if ((*str == '-'))
-		b = -1;
-	if (*str == '-' || *str == '+')
-		str++;
+		return (-1);
 	while (*str >= 48 && *str <= 57)
 	{
-		if (res > ((res * 10) + (*str - '0')) && b == 1)
+		if (res > ((res * 10) + (*str - '0')))
 			return (-1);
-		else if (res > ((res * 10) + (*str - '0')) && b == -1)
+		else if (res > ((res * 10) + (*str - '0')))
 			return (0);
 		else
 			res = (res * 10) + (*str - '0');
 		str++;
 	}
-	return (res * b);
+	if (res > INT_MAX || *str != '\0')
+		res = -1;
+	return (res);
 }
 
 void					ft_putstr_fd(char *s, int fd)

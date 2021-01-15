@@ -6,7 +6,7 @@
 /*   By: ssnowbir <ssnowbir@student.21.ru>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/26 14:58:09 by ssnowbir          #+#    #+#             */
-/*   Updated: 2021/01/13 20:41:48 by ssnowbir         ###   ########.fr       */
+/*   Updated: 2021/01/14 16:08:55 by ssnowbir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,13 @@ int						parsing(char **argv, t_info *info, int argc)
 			info->must_eat = ft_atoi(argv[5]);
 		else
 			info->must_eat = -1;
-		if (info->sum_phil > 200 || info->sum_phil < 2)
+		if (info->death == -1 || info->eat == -1 || info->sleep == -1
+			|| info->sum_phil == -1 || (argc == 6 && info->must_eat == -1))
 		{
-			write(2, "incorrect sum philosophers\n", 27);
+			write(2, "incorrect args\n", 15);
 			return (1);
 		}
-		if (argc == 6 && info->must_eat <= 0)
+		else if (argc == 6 && (info->must_eat <= 0))
 		{
 			write(2, "incorrect sum args[5]\n", 22);
 			return (1);
@@ -38,7 +39,6 @@ int						parsing(char **argv, t_info *info, int argc)
 	}
 	else
 		return (1);
-	return (0);
 }
 
 int						think(t_all *all)
